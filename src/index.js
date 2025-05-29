@@ -3,19 +3,19 @@ import { WeekPlannerCardEditor } from "./editor";
 import { version } from '../package.json';
 
 customElements.define(
-    'week-planner-card',
+    'week-planner-card-custom',
     WeekPlannerCard
 );
 
 window.customCards = window.customCards || [];
 window.customCards.push({
-    type: 'week-planner-card',
-    name: 'Week Planner Card',
+    type: 'week-planner-card-custom',
+    name: 'Week Planner Card Custom',
     description: 'Card to display events for a number of days from one or several calendars.'
 });
 
 customElements.define(
-    'week-planner-card-editor',
+    'week-planner-card-custom-editor',
     WeekPlannerCardEditor
 );
 
