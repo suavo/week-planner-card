@@ -183,6 +183,7 @@ export class WeekPlannerCard extends LitElement {
         this._hideTodayWithoutEvents = config.hideTodayWithoutEvents ?? false;
         this._filter = config.filter ?? false;
         this._filterText = config.filterText ?? false;
+        this._multipleDays = config.multipleDays ?? 'all';
         this._replaceTitleText = config.replaceTitleText ?? false;
         this._combineSimilarEvents = config.combineSimilarEvents ?? false;
         this._showLegend = config.showLegend ?? false;
@@ -953,12 +954,18 @@ export class WeekPlannerCard extends LitElement {
     }
 
     _handleMultiDayEvent(event, startDate, endDate, calendar, calendarSorting) {
-        while (startDate < endDate) {
-            let eventStartDate = startDate;
-            startDate = startDate.plus({ days: 1 }).startOf('day');
-            let eventEndDate = startDate < endDate ? startDate : endDate;
+        let newStartDate = startDate;
+        while (newStartDate < endDate) {
+            let eventStartDate = newStartDate;
+            newStartDate = newStartDate.plus({ days: 1 }).startOf('day');
+            let eventEndDate = newStartDate < endDate ? newStartDate : endDate;
 
-            this._addEvent(event, eventStartDate, eventEndDate, this._isFullDay(eventStartDate, eventEndDate), calendar, calendarSorting);
+            // Add only the selected days of multi-day events
+            if (this._multipleDays === 'all'
+                || (newStartDate === startDate && this._multipleDays !== 'last')
+                || (newStartDate === eventEndDate && this._multipleDays !== 'first')) {
+                    this._addEvent(event, eventStartDate, eventEndDate, this._isFullDay(eventStartDate, eventEndDate), calendar, calendarSorting);
+            }
         }
     }
 

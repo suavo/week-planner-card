@@ -123,6 +123,21 @@ export class WeekPlannerCardEditor extends LitElement {
                         ${this.addBooleanField('hidePastEvents', 'Hide past events')}
                         ${this.addTextField('filter', 'Filter events (regex)')}
                         ${this.addTextField('filterText', 'Filter event text (regex)')}
+                        ${this.addSelectField('multipleDays', 'Multiple days', [
+                            {
+                                value: 'all',
+                                label: 'All days',
+                            }, {
+                                value: 'first',
+                                label: 'First',
+                            }, {
+                                value: 'last',
+                                label: 'Last',
+                            }, {
+                                value: 'first-last',
+                                label: 'First & last',
+                            }
+                        ], true)}
                         ${this.addBooleanField('combineSimilarEvents', 'Combine similar events')}
                         ${this.addBooleanField('showTitle', 'Show title in overview', true)}
                         ${this.addBooleanField('showDescription', 'Show description in overview')}
