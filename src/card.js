@@ -49,6 +49,8 @@ const ICONS_NIGHT = {
   'lightning-rainy': storm_night
 };
 
+const allowedMultiDayValues = new Set(['all', 'first', 'last', 'first-last']);
+
 export class WeekPlannerCard extends LitElement {
     static styles = styles;
 
@@ -97,7 +99,7 @@ export class WeekPlannerCard extends LitElement {
      */
     static getConfigElement() {
         // Create and return an editor element
-        return document.createElement("week-planner-card-editor");
+        return document.createElement("week-planner-card-editor-custom");
     }
 
     /**
@@ -183,7 +185,7 @@ export class WeekPlannerCard extends LitElement {
         this._hideTodayWithoutEvents = config.hideTodayWithoutEvents ?? false;
         this._filter = config.filter ?? false;
         this._filterText = config.filterText ?? false;
-        this._multipleDays = config.multipleDays ?? 'all';
+        this._multipleDays = allowedMultiDayValues.has(config.multipleDays) ? config.multipleDays : 'all';
         this._replaceTitleText = config.replaceTitleText ?? false;
         this._combineSimilarEvents = config.combineSimilarEvents ?? false;
         this._showLegend = config.showLegend ?? false;
@@ -962,8 +964,8 @@ export class WeekPlannerCard extends LitElement {
 
             // Add only the selected days of multi-day events
             if (this._multipleDays === 'all'
-                || (newStartDate === startDate && this._multipleDays !== 'last')
-                || (newStartDate === eventEndDate && this._multipleDays !== 'first')) {
+                || (eventStartDate === startDate && this._multipleDays.toLowerCase().includes('first'))
+                || (newStartDate.toISODate() === endDate.toISODate() && this._multipleDays.toLowerCase().includes('last'))) {
                     this._addEvent(event, eventStartDate, eventEndDate, this._isFullDay(eventStartDate, eventEndDate), calendar, calendarSorting);
             }
         }

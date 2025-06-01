@@ -15,12 +15,12 @@ window.customCards.push({
 });
 
 customElements.define(
-    'week-planner-card-custom-editor',
+    'week-planner-card-editor-custom',
     WeekPlannerCardEditor
 );
 
 console.info(
-    `%c WEEK-PLANNER-CARD %c v${version} `,
+    `%c WEEK-PLANNER-CARD-CUSTOM %c v${version} `,
     'color: white; background: black; font-weight: 700;',
     'color: black; background: white; font-weight: 700;',
 );
